@@ -12,12 +12,14 @@ class Character {
   final String role;
   final IconData icon;
   final int hp;
+  int level;
 
   Character({
     required this.name,
     required this.role,
     required this.icon,
     required this.hp,
+    this.level = 1,
   });
 }
 
@@ -33,8 +35,6 @@ class FellowshipScreen extends StatefulWidget {
 }
 
 class _FellowshipScreenState extends State<FellowshipScreen> {
-  Map<String, int> niveis = {};
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +53,6 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
     );
   }
   Widget _buildTile(BuildContext context, Character character) {
-    final nivel = niveis[character.name] ?? 1;
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       leading: CircleAvatar(
@@ -76,7 +75,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
-          'Nível $nivel',
+          'Nível ${character.level}',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -93,7 +92,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
         );
         if (result != null) {
           setState(() {
-            niveis[character.name] = result;
+            character.level = result;
           });
         }
       },
