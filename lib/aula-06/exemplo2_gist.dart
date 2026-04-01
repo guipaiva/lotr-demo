@@ -12,12 +12,14 @@ class Character {
   final String role;
   final IconData icon;
   final int hp;
+  int level;
 
   Character({
     required this.name,
     required this.role,
     required this.icon,
     required this.hp,
+    this.level = 1,
   });
 }
 
@@ -31,13 +33,12 @@ class FellowshipScreen extends StatefulWidget {
 }
 
 class _FellowshipScreenState extends State<FellowshipScreen> {
-  Map<String, int> niveis = {};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Companhia do Anel'),
+        title: Text('Sociedade do Anel'),
         backgroundColor: Colors.brown.shade800,
         foregroundColor: Colors.white,
       ),
@@ -52,7 +53,6 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
   }
 
   Widget _buildTile(BuildContext context, Character character) {
-    final nivel = niveis[character.name] ?? 1;
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       leading: CircleAvatar(
@@ -75,7 +75,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
-          'Nível $nivel',
+          'Nível ${character.level}',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -83,18 +83,16 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
           ),
         ),
       ),
-      onTap: () async {
-        final result = await Navigator.push<int>(
+      onTap: () {
+        // TODO: (1) adicionar "async" na função
+        //       (2) capturar o resultado com: final result = await Navigator.push<int>(...)
+        //       (3) se result != null, chamar setState para atualizar character.level
+        Navigator.push<int>(
           context,
           MaterialPageRoute(
             builder: (_) => BattleScreen(character: character),
           ),
         );
-        if (result != null) {
-          setState(() {
-            niveis[character.name] = result;
-          });
-        }
       },
     );
   }
@@ -200,7 +198,8 @@ class _BattleScreenState extends State<BattleScreen> {
                 foregroundColor: Colors.white,
                 minimumSize: Size(240, 52),
               ),
-              onPressed: () => Navigator.pop(context, nivel),
+              // TODO: retornar o nivel via Navigator.pop
+              onPressed: () => Navigator.pop(context),
             ),
           ],
         ),

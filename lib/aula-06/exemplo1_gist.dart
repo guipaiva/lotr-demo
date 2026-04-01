@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: FellowshipScreen(),
-  ));
+  runApp(
+    MaterialApp(debugShowCheckedModeBanner: false, home: FellowshipScreen()),
+  );
 }
 
 class Character {
@@ -21,16 +20,31 @@ class Character {
   });
 }
 
-final aragorn = Character(name: 'Aragorn', role: 'Guerreiro', icon: Icons.shield, hp: 100);
-final legolas = Character(name: 'Legolas', role: 'Arqueiro', icon: Icons.gps_fixed, hp: 90);
-final gandalf = Character(name: 'Gandalf', role: 'Mago', icon: Icons.whatshot, hp: 80);
+final aragorn = Character(
+  name: 'Aragorn',
+  role: 'Guerreiro',
+  icon: Icons.shield,
+  hp: 100,
+);
+final legolas = Character(
+  name: 'Legolas',
+  role: 'Arqueiro',
+  icon: Icons.gps_fixed,
+  hp: 90,
+);
+final gandalf = Character(
+  name: 'Gandalf',
+  role: 'Mago',
+  icon: Icons.whatshot,
+  hp: 80,
+);
 
 class FellowshipScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Companhia do Anel'),
+        title: Text('Sociedade do Anel'),
         backgroundColor: Colors.brown.shade800,
         foregroundColor: Colors.white,
       ),
@@ -43,8 +57,18 @@ class FellowshipScreen extends StatelessWidget {
               backgroundColor: Colors.brown.shade100,
               child: Icon(Icons.shield, size: 28, color: Colors.deepOrange),
             ),
-            title: Text('Aragorn', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)),
-            subtitle: Text('Guerreiro', style: TextStyle(fontSize: 15, color: Colors.grey.shade700)),
+            title: Text(
+              'Aragorn',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
+            subtitle: Text(
+              'Guerreiro',
+              style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+            ),
             trailing: Icon(Icons.chevron_right, color: Colors.brown.shade400),
             onTap: () {
               // TODO: navegar para CharacterScreen passando aragorn
@@ -57,8 +81,18 @@ class FellowshipScreen extends StatelessWidget {
               backgroundColor: Colors.brown.shade100,
               child: Icon(Icons.gps_fixed, size: 28, color: Colors.deepOrange),
             ),
-            title: Text('Legolas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)),
-            subtitle: Text('Arqueiro', style: TextStyle(fontSize: 15, color: Colors.grey.shade700)),
+            title: Text(
+              'Legolas',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
+            subtitle: Text(
+              'Arqueiro',
+              style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+            ),
             trailing: Icon(Icons.chevron_right, color: Colors.brown.shade400),
             onTap: () {
               // TODO: navegar para CharacterScreen passando legolas
@@ -71,8 +105,18 @@ class FellowshipScreen extends StatelessWidget {
               backgroundColor: Colors.brown.shade100,
               child: Icon(Icons.whatshot, size: 28, color: Colors.deepOrange),
             ),
-            title: Text('Gandalf', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)),
-            subtitle: Text('Mago', style: TextStyle(fontSize: 15, color: Colors.grey.shade700)),
+            title: Text(
+              'Gandalf',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
+            subtitle: Text(
+              'Mago',
+              style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+            ),
             trailing: Icon(Icons.chevron_right, color: Colors.brown.shade400),
             onTap: () {
               // TODO: navegar para CharacterScreen passando gandalf
@@ -105,7 +149,11 @@ class CharacterScreen extends StatelessWidget {
             SizedBox(height: 16),
             Text(
               character.name,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
             Text(
               character.role,

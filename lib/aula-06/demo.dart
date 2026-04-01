@@ -39,7 +39,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Companhia do Anel'),
+        title: Text('Sociedade do Anel'),
         backgroundColor: Colors.brown.shade800,
         foregroundColor: Colors.white,
       ),
