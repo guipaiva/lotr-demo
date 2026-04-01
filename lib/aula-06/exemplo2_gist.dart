@@ -28,6 +28,8 @@ final legolas = Character(name: 'Legolas', role: 'Arqueiro', icon: Icons.gps_fix
 final gandalf = Character(name: 'Gandalf', role: 'Mago', icon: Icons.whatshot, hp: 80);
 
 class FellowshipScreen extends StatefulWidget {
+  const FellowshipScreen({super.key});
+
   @override
   State<FellowshipScreen> createState() => _FellowshipScreenState();
 }
@@ -101,7 +103,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
 class BattleScreen extends StatefulWidget {
   final Character character;
 
-  BattleScreen({required this.character});
+  const BattleScreen({super.key, required this.character});
 
   @override
   State<BattleScreen> createState() => _BattleScreenState();
@@ -110,7 +112,7 @@ class BattleScreen extends StatefulWidget {
 class _BattleScreenState extends State<BattleScreen> {
   late int hp;
   int xp = 0;
-  int nivel = 1;
+  int level = 1;
 
   @override
   void initState() {
@@ -123,7 +125,7 @@ class _BattleScreenState extends State<BattleScreen> {
       hp = (hp - 20).clamp(0, widget.character.hp);
       xp = xp + 15;
       if (xp >= 100) {
-        nivel++;
+        level++;
         xp = 0;
       }
     });
@@ -159,7 +161,7 @@ class _BattleScreenState extends State<BattleScreen> {
             ),
             SizedBox(height: 8),
             Text(
-              'HP: $hp/${widget.character.hp}  |  XP: $xp/100  |  Nível $nivel',
+              'HP: $hp/${widget.character.hp}  |  XP: $xp/100  |  Nível $level',
               style: TextStyle(fontSize: 16, color: Colors.black),
             ),
             SizedBox(height: 24),
@@ -198,7 +200,7 @@ class _BattleScreenState extends State<BattleScreen> {
                 foregroundColor: Colors.white,
                 minimumSize: Size(240, 52),
               ),
-              // TODO: retornar o nivel via Navigator.pop
+              // TODO: retornar o level via Navigator.pop
               onPressed: () => Navigator.pop(context),
             ),
           ],

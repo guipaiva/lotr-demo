@@ -40,6 +40,8 @@ final gandalf = Character(
 );
 
 class FellowshipScreen extends StatelessWidget {
+  const FellowshipScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,7 +133,7 @@ class FellowshipScreen extends StatelessWidget {
 class CharacterScreen extends StatelessWidget {
   final Character character;
 
-  CharacterScreen({required this.character});
+  const CharacterScreen({super.key, required this.character});
 
   @override
   Widget build(BuildContext context) {

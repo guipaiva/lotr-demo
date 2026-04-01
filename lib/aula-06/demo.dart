@@ -30,6 +30,8 @@ final gandalf = Character(name: 'Gandalf', role: 'Mago', icon: Icons.whatshot, h
 // ── Tela de Lista (StatefulWidget — guarda os níveis retornados) ─────────────
 
 class FellowshipScreen extends StatefulWidget {
+  const FellowshipScreen({super.key});
+
   @override
   State<FellowshipScreen> createState() => _FellowshipScreenState();
 }
@@ -105,7 +107,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
 class BattleScreen extends StatefulWidget {
   final Character character;
 
-  BattleScreen({required this.character});
+  const BattleScreen({super.key, required this.character});
 
   @override
   State<BattleScreen> createState() => _BattleScreenState();
@@ -114,7 +116,7 @@ class BattleScreen extends StatefulWidget {
 class _BattleScreenState extends State<BattleScreen> {
   late int hp;
   int xp = 0;
-  int nivel = 1;
+  int level = 1;
   String log = '';
 
   @override
@@ -134,9 +136,9 @@ class _BattleScreenState extends State<BattleScreen> {
       hp = (hp - 20).clamp(0, widget.character.hp);
       xp = xp + 15;
       if (xp >= 100) {
-        nivel++;
+        level++;
         xp = 0;
-        log = '${widget.character.name} subiu para o nível $nivel!';
+        log = '${widget.character.name} subiu para o nível $level!';
       } else {
         log = hp == 0
             ? '${widget.character.name} caiu em batalha!'
@@ -156,7 +158,7 @@ class _BattleScreenState extends State<BattleScreen> {
     setState(() {
       hp = widget.character.hp;
       xp = 0;
-      nivel = 1;
+      level = 1;
       log = 'Batalha reiniciada!';
     });
   }
@@ -226,7 +228,7 @@ class _BattleScreenState extends State<BattleScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          'Nível $nivel',
+                          'Nível $level',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -328,7 +330,7 @@ class _BattleScreenState extends State<BattleScreen> {
                       foregroundColor: Colors.white,
                       minimumSize: Size(240, 52),
                     ),
-                    onPressed: () => Navigator.pop(context, nivel),
+                    onPressed: () => Navigator.pop(context, level),
                   ),
                 ],
               ),
@@ -355,7 +357,7 @@ class _BattleScreenState extends State<BattleScreen> {
           width: 220,
           height: 22,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(11),
           ),
           alignment: Alignment.centerLeft,

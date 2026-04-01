@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: FellowshipScreen(),
-  ));
+  runApp(
+    MaterialApp(debugShowCheckedModeBanner: false, home: FellowshipScreen()),
+  );
 }
 
 class Character {
@@ -23,17 +22,33 @@ class Character {
   });
 }
 
-final aragorn = Character(name: 'Aragorn', role: 'Guerreiro', icon: Icons.shield, hp: 100);
-final legolas = Character(name: 'Legolas', role: 'Arqueiro', icon: Icons.gps_fixed, hp: 90);
-final gandalf = Character(name: 'Gandalf', role: 'Mago', icon: Icons.whatshot, hp: 80);
+final aragorn = Character(
+  name: 'Aragorn',
+  role: 'Guerreiro',
+  icon: Icons.shield,
+  hp: 100,
+);
+final legolas = Character(
+  name: 'Legolas',
+  role: 'Arqueiro',
+  icon: Icons.gps_fixed,
+  hp: 90,
+);
+final gandalf = Character(
+  name: 'Gandalf',
+  role: 'Mago',
+  icon: Icons.whatshot,
+  hp: 80,
+);
 
 class FellowshipScreen extends StatefulWidget {
+  const FellowshipScreen({super.key});
+
   @override
   State<FellowshipScreen> createState() => _FellowshipScreenState();
 }
 
 class _FellowshipScreenState extends State<FellowshipScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +77,11 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
       ),
       title: Text(
         character.name,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          color: Colors.black,
+        ),
       ),
       subtitle: Text(
         character.role,
@@ -86,9 +105,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
       onTap: () async {
         final result = await Navigator.push<int>(
           context,
-          MaterialPageRoute(
-            builder: (_) => BattleScreen(character: character),
-          ),
+          MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
         );
         if (result != null) {
           setState(() {
@@ -103,7 +120,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
 class BattleScreen extends StatefulWidget {
   final Character character;
 
-  BattleScreen({required this.character});
+  const BattleScreen({super.key, required this.character});
 
   @override
   State<BattleScreen> createState() => _BattleScreenState();
@@ -112,7 +129,7 @@ class BattleScreen extends StatefulWidget {
 class _BattleScreenState extends State<BattleScreen> {
   late int hp;
   int xp = 0;
-  int nivel = 1;
+  int level = 1;
 
   @override
   void initState() {
@@ -125,7 +142,7 @@ class _BattleScreenState extends State<BattleScreen> {
       hp = (hp - 20).clamp(0, widget.character.hp);
       xp = xp + 15;
       if (xp >= 100) {
-        nivel++;
+        level++;
         xp = 0;
       }
     });
@@ -153,7 +170,11 @@ class _BattleScreenState extends State<BattleScreen> {
             SizedBox(height: 16),
             Text(
               widget.character.name,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
             Text(
               widget.character.role,
@@ -161,7 +182,7 @@ class _BattleScreenState extends State<BattleScreen> {
             ),
             SizedBox(height: 8),
             Text(
-              'HP: $hp/${widget.character.hp}  |  XP: $xp/100  |  Nível $nivel',
+              'HP: $hp/${widget.character.hp}  |  XP: $xp/100  |  Nível $level',
               style: TextStyle(fontSize: 16, color: Colors.black),
             ),
             SizedBox(height: 24),
@@ -200,7 +221,7 @@ class _BattleScreenState extends State<BattleScreen> {
                 foregroundColor: Colors.white,
                 minimumSize: Size(240, 52),
               ),
-              onPressed: () => Navigator.pop(context, nivel),
+              onPressed: () => Navigator.pop(context, level),
             ),
           ],
         ),
