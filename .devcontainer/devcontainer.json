@@ -1,0 +1,63 @@
+{
+  "name": "Flutter – LOTR Demo",
+
+  // Build the container from the local Dockerfile so the Flutter SDK version
+  // is explicit and reproducible (change FLUTTER_VERSION in the Dockerfile).
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+
+  // Run as the non-root "vscode" user created by the Microsoft base image.
+  "remoteUser": "vscode",
+
+  // ── Shell & git safe-directory ─────────────────────────────────────────────
+  // Mark the workspace directory as safe so that git commands issued by
+  // Flutter tools work correctly regardless of the repo name.
+  "remoteEnv": {
+    "GIT_CONFIG_PARAMETERS": "'safe.directory=${containerWorkspaceFolder}'"
+  },
+
+  // ── Post-create setup ──────────────────────────────────────────────────────
+  // Runs once after the container is first created.
+  "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && flutter doctor -v && flutter pub get",
+
+  // ── Port forwarding ────────────────────────────────────────────────────────
+  // Flutter web server (see README for the exact run command).
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Flutter Web",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // ── VS Code extensions ─────────────────────────────────────────────────────
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.flutter",
+        "Dart-Code.dart-code",
+        "felixAngelov.bloc",
+        "Nash.awesome-flutter-snippets",
+        "usernamehw.errorlens",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "[dart]": {
+          "editor.defaultFormatter": "Dart-Code.dart-code",
+          "editor.formatOnSave": true,
+          "editor.selectionHighlight": false,
+          "editor.suggest.snippetsPreventQuickSuggestions": false,
+          "editor.suggestSelection": "first",
+          "editor.tabCompletion": "onlySnippets",
+          "editor.wordBasedSuggestions": "off"
+        },
+        "dart.flutterSdkPath": "/opt/flutter",
+        "dart.lineLength": 100
+      }
+    }
+  }
+}
