@@ -1,22 +1,23 @@
 {
   "name": "Flutter – LOTR Demo",
 
-  // Build the container from the local Dockerfile so the Flutter SDK version
-  // is explicit and reproducible (change FLUTTER_VERSION in the Dockerfile).
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
+  // Pinned Debian Bookworm devcontainer base image.
+  // The Flutter SDK is injected by the community devcontainer feature below,
+  // so no custom Dockerfile is needed.
+  "image": "mcr.microsoft.com/devcontainers/base:1-bookworm",
+
+  // ── Dev Container Features ─────────────────────────────────────────────────
+  // The Flutter feature installs the SDK, Dart, and enables the web target.
+  // Pin a specific Flutter version; bump it here to upgrade.
+  "features": {
+    "ghcr.io/devcontainers-community/features/flutter:1": {
+      "version": "3.29.2",
+      "channel": "stable"
+    }
   },
 
-  // Run as the non-root "vscode" user created by the Microsoft base image.
+  // Run as the non-root "vscode" user provided by the base image.
   "remoteUser": "vscode",
-
-  // ── Shell & git safe-directory ─────────────────────────────────────────────
-  // Mark the workspace directory as safe so that git commands issued by
-  // Flutter tools work correctly regardless of the repo name.
-  "remoteEnv": {
-    "GIT_CONFIG_PARAMETERS": "'safe.directory=${containerWorkspaceFolder}'"
-  },
 
   // ── Post-create setup ──────────────────────────────────────────────────────
   // Runs once after the container is first created.
@@ -55,7 +56,6 @@
           "editor.tabCompletion": "onlySnippets",
           "editor.wordBasedSuggestions": "off"
         },
-        "dart.flutterSdkPath": "/opt/flutter",
         "dart.lineLength": 100
       }
     }
