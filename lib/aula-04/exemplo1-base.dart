@@ -93,5 +93,6 @@ class _CharacterState extends State<CharacterScreen> {
 class CharacterScreen extends StatefulWidget {
   const CharacterScreen({super.key});
 
+  @override
   State<CharacterScreen> createState() => _CharacterState();
 }
