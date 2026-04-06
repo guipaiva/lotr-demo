@@ -236,7 +236,7 @@ class _BattleScreenState extends State<BattleScreen> {
           width: 180,
           height: 18,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(9),
           ),
           alignment: Alignment.centerLeft,
