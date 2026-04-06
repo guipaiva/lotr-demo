@@ -1,54 +1,36 @@
 {
   "name": "Flutter – LOTR Demo",
-
   // Pinned Debian Bookworm devcontainer base image.
-  // The Flutter SDK is injected by the community devcontainer feature below,
-  // so no custom Dockerfile is needed.
+  // Flutter is installed in post-create to avoid dependence on external
+  // devcontainer features hosted on ghcr.io.
   "image": "mcr.microsoft.com/devcontainers/base:1-bookworm",
-
-  // ── Dev Container Features ─────────────────────────────────────────────────
-  // The Flutter feature installs the SDK, Dart, and enables the web target.
-  // Pin a specific Flutter version; bump it here to upgrade.
-  "features": {
-    "ghcr.io/devcontainers-community/features/flutter:1": {
-      "version": "3.29.2",
-      "channel": "stable"
-    }
-  },
-
   // Run as the non-root "vscode" user provided by the base image.
   "remoteUser": "vscode",
-
   // ── Post-create setup ──────────────────────────────────────────────────────
   // Runs once after the container is first created.
-  "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && flutter doctor -v && flutter pub get && curl -sL https://firebase.tools | bash && dart pub global activate flutterfire_cli",
-
+  "postCreateCommand": "bash -lc 'set -euo pipefail; git config --global --add safe.directory ${containerWorkspaceFolder}; sudo apt-get update; sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa ca-certificates nodejs npm; FLUTTER_VERSION=3.41.6-stable; if [ ! -x /opt/flutter/bin/flutter ]; then cd /tmp; curl -fsSL -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz; sudo rm -rf /opt/flutter; sudo tar -xJf flutter.tar.xz -C /opt; sudo chown -R vscode:vscode /opt/flutter; fi; if ! grep -q \"/opt/flutter/bin\" ~/.bashrc; then echo \"export PATH=\\\"/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$HOME/.pub-cache/bin:$PATH\\\"\" >> ~/.bashrc; fi; if ! grep -q \"\\.pub-cache/bin\" ~/.bashrc; then echo \"export PATH=\\\"$HOME/.pub-cache/bin:$PATH\\\"\" >> ~/.bashrc; fi; export PATH=\"/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$HOME/.pub-cache/bin:$PATH\"; flutter config --enable-web; flutter doctor -v || true; curl -sL https://firebase.tools | bash; dart pub global activate flutterfire_cli; flutter pub get || true'",
   // ── Port forwarding ────────────────────────────────────────────────────────
   // Flutter web server (see README for the exact run command).
-  "forwardPorts": [8080],
+  "forwardPorts": [
+    8080
+  ],
   "portsAttributes": {
     "8080": {
       "label": "Flutter Web",
       "onAutoForward": "notify"
     }
   },
-
   // ── VS Code extensions ─────────────────────────────────────────────────────
   "customizations": {
     "vscode": {
       "extensions": [
         "Dart-Code.flutter",
-        "Dart-Code.dart-code",
-        "felixAngelov.bloc",
-        "Nash.awesome-flutter-snippets",
-        "usernamehw.errorlens",
-        "eamodio.gitlens"
+        "Dart-Code.dart-code"
       ],
       "settings": {
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
         "[dart]": {
-          "editor.defaultFormatter": "Dart-Code.dart-code",
           "editor.formatOnSave": true,
           "editor.selectionHighlight": false,
           "editor.suggest.snippetsPreventQuickSuggestions": false,
