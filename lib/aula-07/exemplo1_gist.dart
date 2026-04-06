@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'dart:async';
 
 // Simula buscar um herói da nuvem — leva 1 segundo para responder
