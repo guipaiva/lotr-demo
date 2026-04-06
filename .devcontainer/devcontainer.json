@@ -21,7 +21,7 @@
 
   // ── Post-create setup ──────────────────────────────────────────────────────
   // Runs once after the container is first created.
-  "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && flutter doctor -v && flutter pub get",
+  "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && flutter doctor -v && flutter pub get && curl -sL https://firebase.tools | bash && dart pub global activate flutterfire_cli",
 
   // ── Port forwarding ────────────────────────────────────────────────────────
   // Flutter web server (see README for the exact run command).
