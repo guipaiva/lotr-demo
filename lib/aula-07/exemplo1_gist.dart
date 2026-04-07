@@ -7,14 +7,10 @@ Future<String> buscarHeroi() async {
   return 'Aragorn';
 }
 
-// EXERCÍCIO: O código abaixo imprime na ordem errada.
-// Adicione async/await nos lugares certos para imprimir:
-// 1. Buscando herói...
-// 2. Herói encontrado: Aragorn
-// 3. Missão cumprida!
+// EXERCÍCIO: O código abaixo não imprime o nome do herói corretamente.
+// Adicione async e await nos lugares certos para corrigir.
 
 void main() {
-  print('Buscando herói...');
-  buscarHeroi().then((heroi) => print('Herói encontrado: $heroi'));
-  print('Missão cumprida!');
+  final heroi = buscarHeroi(); // sem await — retorna um Future, não uma String
+  print('Herói: $heroi');      // imprime "Instance of Future<String>"
 }

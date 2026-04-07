@@ -9,49 +9,61 @@ class FellowshipScreen extends StatelessWidget {
   void _addCharacter(BuildContext context) {
     final nameController = TextEditingController();
     final hpController = TextEditingController();
+    String selectedRole = 'Guerreiro';
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text('Novo personagem'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(labelText: 'Nome'),
-              textCapitalization: TextCapitalization.words,
+      builder: (_) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: Text('Novo personagem'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: 'Nome'),
+                textCapitalization: TextCapitalization.words,
+              ),
+              SizedBox(height: 12),
+              DropdownButtonFormField<String>(
+                value: selectedRole,
+                decoration: InputDecoration(labelText: 'Classe'),
+                items: ['Guerreiro', 'Arqueiro', 'Mago']
+                    .map((r) => DropdownMenuItem(value: r, child: Text(r)))
+                    .toList(),
+                onChanged: (value) => setState(() => selectedRole = value!),
+              ),
+              SizedBox(height: 12),
+              TextField(
+                controller: hpController,
+                decoration: InputDecoration(labelText: 'HP'),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancelar'),
             ),
-            SizedBox(height: 12),
-            TextField(
-              controller: hpController,
-              decoration: InputDecoration(labelText: 'HP'),
-              keyboardType: TextInputType.number,
+            ElevatedButton(
+              onPressed: () {
+                final name = nameController.text.trim();
+                final hp = int.tryParse(hpController.text.trim()) ?? 100;
+                if (name.isNotEmpty) {
+                  fellowship.add({
+                    'name': name,
+                    'role': selectedRole,
+                    'hp': hp,
+                    'level': 1,
+                  });
+                }
+                Navigator.pop(context);
+              },
+              child: Text('Adicionar'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              final name = nameController.text.trim();
-              final hp = int.tryParse(hpController.text.trim()) ?? 100;
-              if (name.isNotEmpty) {
-                fellowship.add({
-                  'name': name,
-                  'role': 'Guerreiro',
-                  'hp': hp,
-                  'level': 1,
-                });
-              }
-              Navigator.pop(context);
-            },
-            child: Text('Adicionar'),
-          ),
-        ],
       ),
     );
   }
@@ -74,11 +86,12 @@ class FellowshipScreen extends StatelessWidget {
               .map((doc) => Character.fromDoc(doc))
               .toList();
           return GridView.builder(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(8),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisCount: 5,
+              crossAxisSpacing: 6,
+              mainAxisSpacing: 6,
+              childAspectRatio: 0.8,
             ),
             itemCount: characters.length,
             itemBuilder: (context, i) => _buildCard(context, characters[i]),
@@ -107,40 +120,36 @@ class FellowshipScreen extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        elevation: 3,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        padding: EdgeInsets.all(16),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: EdgeInsets.all(6),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 32,
+            radius: 16,
             backgroundColor: Colors.brown.shade100,
-            child: Icon(character.icon, size: 34, color: Colors.deepOrange),
-          ),
-          SizedBox(height: 12),
-          Text(
-            character.name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            textAlign: TextAlign.center,
+            child: Icon(character.icon, size: 16, color: Colors.deepOrange),
           ),
           SizedBox(height: 4),
           Text(
-            character.role,
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+            character.name,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 2),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               'Nível ${character.level}',
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 9,
                 fontWeight: FontWeight.bold,
                 color: Colors.amber.shade900,
               ),
