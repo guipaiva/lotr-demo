@@ -1,19 +1,16 @@
 {
   "name": "Flutter – LOTR Demo",
-  // Pinned Debian Bookworm devcontainer base image.
-  // Flutter is installed in post-create to avoid dependence on external
-  // devcontainer features hosted on ghcr.io.
-  "image": "mcr.microsoft.com/devcontainers/base:1-bookworm",
-  // Run as the non-root "vscode" user provided by the base image.
+  // Build from local Dockerfile — Flutter web (no Android SDK) is baked into
+  // a cached layer, so Codespaces reuses the image on subsequent creations.
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "remoteUser": "vscode",
   // ── Post-create setup ──────────────────────────────────────────────────────
-  // Runs once after the container is first created.
-  "postCreateCommand": "bash -lc 'set -euo pipefail; git config --global --add safe.directory ${containerWorkspaceFolder}; sudo apt-get update; sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa ca-certificates nodejs npm; FLUTTER_VERSION=3.41.6-stable; if [ ! -x /opt/flutter/bin/flutter ]; then cd /tmp; curl -fsSL -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz; sudo rm -rf /opt/flutter; sudo tar -xJf flutter.tar.xz -C /opt; sudo chown -R vscode:vscode /opt/flutter; fi; if ! grep -q \"/opt/flutter/bin\" ~/.bashrc; then echo \"export PATH=\\\"/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$HOME/.pub-cache/bin:$PATH\\\"\" >> ~/.bashrc; fi; if ! grep -q \"\\.pub-cache/bin\" ~/.bashrc; then echo \"export PATH=\\\"$HOME/.pub-cache/bin:$PATH\\\"\" >> ~/.bashrc; fi; export PATH=\"/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$HOME/.pub-cache/bin:$PATH\"; flutter config --enable-web; flutter doctor -v || true; curl -sL https://firebase.tools | bash; dart pub global activate flutterfire_cli; flutter pub get || true'",
+  // Everything is pre-installed in the image. Just fetch pub deps.
+  "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && flutter pub get || true",
   // ── Port forwarding ────────────────────────────────────────────────────────
-  // Flutter web server (see README for the exact run command).
-  "forwardPorts": [
-    8080
-  ],
+  "forwardPorts": [8080],
   "portsAttributes": {
     "8080": {
       "label": "Flutter Web",
