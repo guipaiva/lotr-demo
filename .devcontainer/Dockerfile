@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/base:1-bookworm
 
-ARG FLUTTER_VERSION=3.29.3
+ARG FLUTTER_VERSION=3.41.6
 
 # System deps + Node 20 (firebase-tools requires >=20)
 RUN apt-get update && apt-get install -y --no-install-recommends \
