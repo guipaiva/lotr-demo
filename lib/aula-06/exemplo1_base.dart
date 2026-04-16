@@ -154,6 +154,12 @@ class CharacterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.cable),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(character.name),
         backgroundColor: Colors.brown.shade800,
         foregroundColor: Colors.white,

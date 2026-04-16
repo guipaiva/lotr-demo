@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: FellowshipScreen(),
-  ));
+  runApp(
+    MaterialApp(debugShowCheckedModeBanner: false, home: FellowshipScreen()),
+  );
 }
 
 class Character {
@@ -23,9 +22,24 @@ class Character {
   });
 }
 
-final aragorn = Character(name: 'Aragorn', role: 'Guerreiro', icon: Icons.shield, hp: 100);
-final legolas = Character(name: 'Legolas', role: 'Arqueiro', icon: Icons.gps_fixed, hp: 90);
-final gandalf = Character(name: 'Gandalf', role: 'Mago', icon: Icons.whatshot, hp: 80);
+final aragorn = Character(
+  name: 'Aragorn',
+  role: 'Guerreiro',
+  icon: Icons.shield,
+  hp: 100,
+);
+final legolas = Character(
+  name: 'Legolas',
+  role: 'Arqueiro',
+  icon: Icons.gps_fixed,
+  hp: 90,
+);
+final gandalf = Character(
+  name: 'Gandalf',
+  role: 'Mago',
+  icon: Icons.whatshot,
+  hp: 80,
+);
 
 // ── Tela de Lista (StatefulWidget — guarda os níveis retornados) ─────────────
 
@@ -54,6 +68,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
       ),
     );
   }
+
   Widget _buildTile(BuildContext context, Character character) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -64,7 +79,11 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
       ),
       title: Text(
         character.name,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          color: Colors.black,
+        ),
       ),
       subtitle: Text(
         character.role,
@@ -88,9 +107,7 @@ class _FellowshipScreenState extends State<FellowshipScreen> {
       onTap: () async {
         final result = await Navigator.push<int>(
           context,
-          MaterialPageRoute(
-            builder: (_) => BattleScreen(character: character),
-          ),
+          MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
         );
         if (result != null) {
           setState(() {
@@ -167,15 +184,16 @@ class _BattleScreenState extends State<BattleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(widget.character.name),
         backgroundColor: Colors.brown.shade800,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: _resetar,
-          ),
-        ],
+        actions: [IconButton(icon: Icon(Icons.refresh), onPressed: _resetar)],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -208,21 +226,35 @@ class _BattleScreenState extends State<BattleScreen> {
                   // Nome e classe
                   Text(
                     widget.character.name,
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                   SizedBox(height: 6),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(widget.character.icon, size: 20, color: Colors.deepOrange),
+                      Icon(
+                        widget.character.icon,
+                        size: 20,
+                        color: Colors.deepOrange,
+                      ),
                       SizedBox(width: 6),
                       Text(
                         widget.character.role,
-                        style: TextStyle(color: Colors.grey.shade900, fontSize: 18),
+                        style: TextStyle(
+                          color: Colors.grey.shade900,
+                          fontSize: 18,
+                        ),
                       ),
                       SizedBox(width: 14),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.amber.shade100,
                           borderRadius: BorderRadius.circular(12),
@@ -324,7 +356,10 @@ class _BattleScreenState extends State<BattleScreen> {
                   SizedBox(height: 24),
                   ElevatedButton.icon(
                     icon: Icon(Icons.arrow_back),
-                    label: Text('Encerrar batalha', style: TextStyle(fontSize: 16)),
+                    label: Text(
+                      'Encerrar batalha',
+                      style: TextStyle(fontSize: 16),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.brown.shade700,
                       foregroundColor: Colors.white,
@@ -349,7 +384,11 @@ class _BattleScreenState extends State<BattleScreen> {
           width: 36,
           child: Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.black,
+            ),
           ),
         ),
         SizedBox(width: 10),
