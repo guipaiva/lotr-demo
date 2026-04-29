@@ -117,7 +117,7 @@ class _NewCharacterScreenState extends State<NewCharacterScreen> {
                   if (hpValue == null) {
                     return "O HP não pode ser vazio.";
                   }
-                  if (role == hpValue < 1 || hpValue > 200) {
+                  if (hpValue < 1 || hpValue > 200) {
                     return "O HP deve estar entre 1 e 200.";
                   }
                   return null;

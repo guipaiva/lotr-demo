@@ -24,6 +24,9 @@ class FellowshipScreen extends StatelessWidget {
           final characters = snapshot.data!.docs
               .map((doc) => Character.fromDoc(doc))
               .toList();
+          if (characters.isEmpty) {
+            return const Center(child: Text('Nenhum personagem na Sociedade ainda.'));
+          }
           return ListView.builder(
             padding: const EdgeInsets.all(12),
             itemCount: characters.length,
@@ -37,9 +40,7 @@ class FellowshipScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const NewCharacterScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const NewCharacterScreen()),
           );
         },
         child: const Icon(Icons.add),
@@ -56,14 +57,12 @@ class FellowshipScreen extends StatelessWidget {
           child: Icon(character.icon, color: Colors.deepOrange),
         ),
         title: Text(character.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${character.role} · Nível ${character.level}'),
+        subtitle: Text('${character.race} · ${character.role} · Nível ${character.level}'),
         trailing: const Icon(Icons.chevron_right),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
-          );
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
+        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'character.dart';
 import 'battle_screen.dart';
 import 'new_character_screen.dart';
+import 'races_screen.dart';
 
 class FellowshipScreen extends StatelessWidget {
   const FellowshipScreen({super.key});
@@ -14,6 +15,16 @@ class FellowshipScreen extends StatelessWidget {
         title: const Text('Sociedade do Anel'),
         backgroundColor: Colors.brown.shade800,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu_book),
+            tooltip: 'Raças',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const RacesScreen()),
+            ),
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: fellowship.snapshots(),
@@ -24,6 +35,9 @@ class FellowshipScreen extends StatelessWidget {
           final characters = snapshot.data!.docs
               .map((doc) => Character.fromDoc(doc))
               .toList();
+          if (characters.isEmpty) {
+            return const Center(child: Text('Nenhum personagem na Sociedade ainda.'));
+          }
           return ListView.builder(
             padding: const EdgeInsets.all(12),
             itemCount: characters.length,
@@ -34,14 +48,10 @@ class FellowshipScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.brown.shade700,
         foregroundColor: Colors.white,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const NewCharacterScreen(),
-            ),
-          );
-        },
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const NewCharacterScreen()),
+        ),
         child: const Icon(Icons.add),
       ),
     );
@@ -52,18 +62,18 @@ class FellowshipScreen extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Colors.brown.shade100,
-          child: Icon(character.icon, color: Colors.deepOrange),
-        ),
+            backgroundColor: Colors.brown.shade100,
+            backgroundImage: character.imageUrl != null
+                ? NetworkImage(character.imageUrl!) as ImageProvider
+                : AssetImage(character.raceAsset),
+          ),
         title: Text(character.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${character.role} · Nível ${character.level}'),
+        subtitle: Text('${character.race} · ${character.role} · Nível ${character.level}'),
         trailing: const Icon(Icons.chevron_right),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
-          );
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
+        ),
       ),
     );
   }

@@ -1,0 +1,7 @@
+[
+  {"name": "Elfo",   "image": "assets/races/elf.png",    "description": "Imortais, sábios e habilidosos com o arco"},
+  {"name": "Humano", "image": "assets/races/human.png",  "description": "Corajosos, determinados e adaptáveis"},
+  {"name": "Hobbit", "image": "assets/races/hobbit.png", "description": "Pequenos mas de grande coragem e resiliência"},
+  {"name": "Anão",   "image": "assets/races/dwarf.png",  "description": "Robustos, leais e habilidosos ferreiros"},
+  {"name": "Mago",   "image": "assets/races/wizard.png", "description": "Poderosos feiticeiros da Ordem Istari"}
+]

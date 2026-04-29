@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'character.dart';
 import 'battle_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// TODO 5: Importe cloud_firestore
-// TODO 6: Crie a referência para a coleção:
-//   final fellowship = FirebaseFirestore.instance.collection('fellowship');
+final fellowship = FirebaseFirestore.instance.collection('fellowship');
 
 class FellowshipScreen extends StatelessWidget {
   const FellowshipScreen({super.key});
@@ -66,9 +65,7 @@ class FellowshipScreen extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (_) => BattleScreen(character: character),
-          ),
+          MaterialPageRoute(builder: (_) => BattleScreen(character: character)),
         );
       },
     );
